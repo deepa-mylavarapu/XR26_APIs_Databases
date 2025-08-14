@@ -50,9 +50,21 @@ namespace WeatherApp.UI
             
             try
             {
-                // TODO: Call API client to get weather data
-              
+                 var weatherData = await apiClient.GetWeatherDataAsync(cityName);
+
+                  if (weatherData != null && weatherData.IsValid)
+                  {
+                      DisplayWeatherData(weatherData);
+                      SetStatusText("Weather data loaded successfully");
+                  }
+                  else
+                  {
+                      SetStatusText("Failed to get weather data. Please try again.");
+                  }
                 
+                // TODO: Call API client to get weather data
+
+
                 // TODO: Handle the response
             }
             catch (System.Exception ex)
@@ -84,8 +96,10 @@ namespace WeatherApp.UI
             // TODO: Add more weather details
             if (weatherData.Main != null)
             {
-                displayText += "";
-                displayText += "";
+                displayText +=$"The temperature is{weatherData.Main.Temperature}kelvin\n";
+                displayText +=$"It feels like the weather is{weatherData.Main.FeelsLike}kelvin\n";
+                displayText +=$"The humidity is{weatherData.Main.Humidity}kelvin\n";
+                displayText +=$"The pressure is{weatherData.Main.Pressure}kelvin\n";
             }
             
             weatherDisplayText.text = displayText;
