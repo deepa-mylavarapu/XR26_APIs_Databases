@@ -5,7 +5,6 @@ namespace WeatherApp.Data
 {
     /// <summary>
     /// Main weather data structure matching OpenWeatherMap API response
-    /// TODO: Students will complete the JsonProperty attributes
     /// </summary>
     [Serializable]
     public class WeatherData
@@ -34,7 +33,6 @@ namespace WeatherApp.Data
 
     /// <summary>
     /// Main weather information (temperature, humidity, etc.)
-    /// TODO: Students will complete the JsonProperty attributes
     /// </summary>
     [Serializable]
     public class MainWeatherInfo
@@ -58,7 +56,6 @@ namespace WeatherApp.Data
 
     /// <summary>
     /// Weather description information
-    /// TODO: Students will complete the JsonProperty attributes
     /// </summary>
     [Serializable]
     public class WeatherDescription

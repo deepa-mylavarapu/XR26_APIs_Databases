@@ -61,11 +61,7 @@ namespace WeatherApp.UI
                   {
                       SetStatusText("Failed to get weather data. Please try again.");
                   }
-                
-                // TODO: Call API client to get weather data
-
-
-                // TODO: Handle the response
+             
             }
             catch (System.Exception ex)
             {
@@ -80,30 +76,31 @@ namespace WeatherApp.UI
             }
         }
         
-        /// TODO: Students will implement this method
-        private void DisplayWeatherData(WeatherData weatherData)
-        {
-            // TODO: Format and display weather information
-            // Example format:
-            // City: London
-            // Temperature: 15.2°C (Feels like: 14.1°C)
-            // Description: Clear sky
-            // Humidity: 65%
-            // Pressure: 1013 hPa
-
-            string displayText = "";
-            
-            // TODO: Add more weather details
-            if (weatherData.Main != null)
+       
+            private void DisplayWeatherData(WeatherData weatherData)
             {
-                displayText +=$"The temperature is{weatherData.Main.Temperature}kelvin\n";
-                displayText +=$"It feels like the weather is{weatherData.Main.FeelsLike}kelvin\n";
-                displayText +=$"The humidity is{weatherData.Main.Humidity}kelvin\n";
-                displayText +=$"The pressure is{weatherData.Main.Pressure}kelvin\n";
+                if (weatherData == null || weatherData.Main == null || weatherData.Weather == null || weatherData.Weather.Length == 0)
+                {
+                    weatherDisplayText.text = "Weather data is incomplete.";
+                    return;
+                }
+
+                string city = weatherData.CityName ?? "London";
+                double tempCelsius = weatherData.Main.Temperature - 273.15;
+                double feelsLikeCelsius = weatherData.Main.FeelsLike - 273.15;
+                int humidity = weatherData.Main.Humidity;
+                int pressure = weatherData.Main.Pressure;
+                string description = weatherData.Weather[0].Description ?? "No description";
+
+                string displayText = $" City: {city}\n" +
+                                     $" Temperature: {tempCelsius:F1}°C (Feels like: {feelsLikeCelsius:F1}°C)\n" +
+                                     $" Description: {description}\n" +
+                                     $" Humidity: {humidity}%\n" +
+                                     $" Pressure: {pressure} hPa";
+
+                weatherDisplayText.text = displayText;
             }
-            
-            weatherDisplayText.text = displayText;
-        }
+
         
         private void SetStatusText(string message)
         {

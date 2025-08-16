@@ -17,9 +17,9 @@ namespace WeatherApp.Services
         [Header("API Configuration")]
         [SerializeField] private string baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
+
         /// <summary>
         /// Fetch weather data for a specific city using async/await pattern
-        /// TODO: Students will implement this method
         /// </summary>
         /// <param name="city">City name to get weather for</param>
         /// <returns>WeatherData object or null if failed</returns>
@@ -40,15 +40,18 @@ namespace WeatherApp.Services
             }
 
             //https://api.openweathermap.org/data/2.5/weather?q=london&appid=aada47f1da3cbe0001457c1e95f7f449
-            string url = $"{baseUrl}?q={city}&applied={ApiConfig.OpenWeatherMapApiKey}";
+            string url = $"{baseUrl}?q={city}&appid={ApiConfig.OpenWeatherMapApiKey}";
 
-            // TODO: Create UnityWebRequest and use modern async pattern
+
             using (UnityWebRequest request = UnityWebRequest.Get(url))
             {
                 // send the web request in the request object we just created
                 await request.SendWebRequest();
 
-                // TODO: Implement proper error handling for different result types
+                while (!request.isDone)
+                    await Task.Yield();
+
+
                 switch (request.result)
                 {
                     case UnityWebRequest.Result.Success:
@@ -68,11 +71,6 @@ namespace WeatherApp.Services
                 }
 
             }
-
-
-            // TODO: Parse JSON response using Newtonsoft.Json
-
-            // TODO: Return the parsed WeatherData object
 
             return null;// Placeholder - students will replace this
         }
